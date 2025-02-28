@@ -1,43 +1,53 @@
+---
 name: Deploy to VPS
-
 on:
   push:
     branches:
       - master
-
 jobs:
   deploy:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
-
       - name: Setup SSH
         run: |
           mkdir -p ~/.ssh
           echo "${{ secrets.VPS_REACT_KEY }}" > ~/.ssh/github_deploy
           chmod 600 ~/.ssh/github_deploy
-
       - name: Deploy via SSH
-        run: |
-            ssh -i ~/.ssh/github_deploy -o StrictHostKeyChecking=no ubuntu@92.222.25.243 << 'EOF'
-            # Vai nella cartella del progetto
-            cd /home/apache/site2/5IA01_Felici-Popa_React
+        run: >
+          ssh -i ~/.ssh/github_deploy -o StrictHostKeyChecking=no
+          ubuntu@92.222.25.243 << 'EOF'
 
-            # Aggiorna il repository con i dati del branch master
-            git fetch origin master
-            git reset --hard origin/master
+          # Vai nella cartella del progetto
 
-            # Controlla se npm è installato, altrimenti lo installa
-            if ! command -v npm >/dev/null 2>&1; then
-              sudo apt-get update && sudo apt-get install -y npm
-            fi
+          cd /home/apache/site2/5IA01_Felici-Popa_React
 
-            # Installa le dipendenze e crea la build
-            npm install
-            npm run build
 
-            # (Opzionale) Riavvia Apache per servire la nuova build
-            sudo systemctl restart apache2
-EOF
+          # Aggiorna il repository con i dati del branch master
+
+          git fetch origin master
+
+          git reset --hard origin/master
+
+
+          # Controlla se npm è installato, altrimenti lo installa
+
+          if ! command -v npm >/dev/null 2>&1; then
+            sudo apt-get update && sudo apt-get install -y npm
+          fi
+
+
+          # Installa le dipendenze e crea la build
+
+          npm install
+
+          npm run build
+
+
+          # (Opzionale) Riavvia Apache per servire la nuova build
+
+          sudo systemctl restart apache2
+
+          EOF
