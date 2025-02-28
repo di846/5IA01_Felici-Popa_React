@@ -40,3 +40,4 @@ jobs:
 
             # (Opzionale) Riavvia Apache per servire la nuova build
             sudo systemctl restart apache2
+EOF
