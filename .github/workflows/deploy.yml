@@ -23,7 +23,6 @@ jobs:
         with:
           host: ${{ secrets.VPS_HOST }}
           username: ${{ secrets.VPS_USER }}
-          port: ${{ secrets.VPS_PORT }}   # Solitamente 22, se non modificata
           script: |
             # Vai nella cartella del progetto
             cd /home/apache/site2/5IA01_Felici-Popa_React
