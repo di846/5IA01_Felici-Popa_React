@@ -42,6 +42,24 @@ jobs:
             sudo apt-get update && sudo apt-get install -y npm
           fi
 
+            # Controlla se curl è installato, altrimenti lo installa
+            if ! command -v curl >/dev/null 2>&1; then
+              sudo apt-get update && sudo apt-get install -y curl
+            fi
+
+            # Installa NVM se non è già installato
+            if [ ! -d "$HOME/.nvm" ]; then
+              curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.3/install.sh | bash
+              # Carica NVM
+              export NVM_DIR="$HOME/.nvm"
+              [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+            fi
+
+            # Installa Node.js 16 se non è già installato
+            if ! command -v node >/dev/null 2>&1; then
+              nvm install 16
+            fi
+
           nvm use 16
 
           # Installa le dipendenze e crea la build
