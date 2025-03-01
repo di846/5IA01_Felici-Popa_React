@@ -20,7 +20,7 @@ jobs:
           chmod 600 ~/.ssh/id_rsa
           chmod 700 ~/.ssh
       - name: Deploy via SSH
-        run: >
+        run: |
           ssh -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no
           ubuntu@92.222.25.243 << 'EOF'
 
