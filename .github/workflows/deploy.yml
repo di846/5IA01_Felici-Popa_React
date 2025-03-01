@@ -12,7 +12,7 @@ jobs:
       - name: Setup Node.js 16
         uses: actions/setup-node@v4
         with:
-          node-version: '16.x'
+          node-version: 16.x
       - name: Setup SSH
         run: |
           mkdir -p ~/.ssh
