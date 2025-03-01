@@ -60,8 +60,6 @@ jobs:
               nvm install 16
             fi
 
-          nvm use 16
-
           # Installa le dipendenze e crea la build
 
           npm install
